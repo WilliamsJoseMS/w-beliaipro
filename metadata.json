@@ -1,0 +1,5 @@
+{
+  "name": "w-bot-pro",
+  "description": "Professional WhatsApp automation platform using Baileys. Features message queuing, anti-spam protection, and group management.",
+  "requestFramePermissions": []
+}

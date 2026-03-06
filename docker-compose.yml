@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  wbot-pro:
+    build: .
+    container_name: wbot-pro-app
+    ports:
+      - "3000:3000"
+      - "80:3000"
+      - "5173:5173"
+    environment:
+      - SUPABASE_URL=${https://zsuuhwhytiajiyaugoya.supabase.co}
+      - SUPABASE_ANON_KEY=${eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzdXVod2h5dGlhaml5YXVnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMDIxNDAsImV4cCI6MjA4NzU3ODE0MH0.Z_l89hSl-MJoNf8gkugdUnGKRnaYHUFsHvHqgo161L4}
+      - SUPABASE_SERVICE_ROLE_KEY=${eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzdXVod2h5dGlhaml5YXVnb3lhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjAwMjE0MCwiZXhwIjoyMDg3NTc4MTQwfQ.E1ctMuavl66JC8xQNj7nEasgdT5h-F4Rig70RA1-8PM}
+      - NODE_ENV=production
+    volumes:
+      - ./wbot.db:/app/wbot.db
+      - ./sessions:/app/sessions
+      - ./uploads:/app/uploads
+    restart: unless-stopped

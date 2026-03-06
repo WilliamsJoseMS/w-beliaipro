@@ -1,0 +1,143 @@
+{
+  "name": "w-beli-ai-pro",
+  "private": true,
+  "version": "1.0.0",
+  "description": "W-Beli.Ai Pro - WhatsApp Automation Platform",
+  "author": "Javi",
+  "type": "module",
+  "main": "electron.cjs",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "build": "vite build",
+    "build:icon": "node scripts/create-icon.cjs",
+    "build:server": "node scripts/build-server.cjs",
+    "preview": "vite preview",
+    "clean": "rimraf dist dist-electron server-compiled.cjs",
+    "lint": "tsc --noEmit",
+    "electron:dev": "electron .",
+    "dist": "npm run build && npm run build:server && electron-builder",
+    "dist:x64": "node scripts/build-all.cjs --x64",
+    "dist:x86": "node scripts/build-all.cjs --x86",
+    "dist:all": "node scripts/build-all.cjs --all",
+    "package:standalone": "node scripts/package-standalone.cjs"
+  },
+  "bin": "server-compiled.cjs",
+  "pkg": {
+    "assets": [
+      ".env",
+      "assets/**/*"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "dist-standalone"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.97.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/multer": "^2.0.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react-virtualized-auto-sizer": "^1.0.4",
+    "@types/react-window": "^1.8.8",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "@whiskeysockets/baileys": "npm:@dark-yasiya/baileys@^1.0.8",
+    "better-sqlite3": "^12.6.2",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "jimp": "^0.22.12",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "multer": "^2.0.2",
+    "pino": "^10.3.1",
+    "qrcode": "^1.5.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.6.0",
+    "react-router-dom": "^7.13.1",
+    "react-virtualized-auto-sizer": "^2.0.3",
+    "react-window": "^2.2.7",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "uuid": "^13.0.0",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "autoprefixer": "^10.4.21",
+    "electron": "30.0.0",
+    "electron-builder": "26.8.1",
+    "electron-rebuild": "^3.2.9",
+    "esbuild": "^0.27.3",
+    "pkg": "^5.8.1",
+    "png-to-ico": "^3.0.1",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.14"
+  },
+  "build": {
+    "appId": "com.wbeliaipro.app",
+    "productName": "W-Beli.Ai Pro",
+    "artifactName": "W-Beli.Ai Pro ${arch}.${ext}",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "server-compiled.cjs",
+      "electron.cjs",
+      "package.json",
+      "assets/**/*",
+      "public/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": ".env",
+        "to": ".env"
+      },
+      {
+        "from": "run-server.bat",
+        "to": "run-server.bat"
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*",
+      "**/*.node"
+    ],
+    "win": {
+      "icon": "assets/icons/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icons/icon.ico",
+      "uninstallerIcon": "assets/icons/icon.ico",
+      "installerHeaderIcon": "assets/icons/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "W-Beli.Ai Pro",
+      "artifactName": "W-Beli.Ai Pro ${arch}.${ext}",
+      "include": "build/installer.nsh"
+    },
+    "nodeGypRebuild": false,
+    "npmRebuild": true,
+    "buildDependenciesFromSource": false,
+    "linux": {
+      "target": "AppImage",
+      "category": "Office"
+    }
+  }
+}

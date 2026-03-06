@@ -1,0 +1,13 @@
+﻿> pkg@5.8.1
+> Warning Cannot include directory %1 into executable.
+  The directory must be distributed with executable as %2.
+  %1: node_modules\sharp\build\Release
+  %2: path-to-executable/sharp/build/Release
+> Warning Cannot include directory %1 into executable.
+  The directory must be distributed with executable as %2.
+  %1: node_modules\sharp\vendor\lib
+  %2: path-to-executable/sharp/vendor/lib
+> Error! --no-bytecode and no source breaks final executable
+  C:\Users\Williams Jos├® MS\Desktop\w-bot-pro-new\server-compiled.cjs
+  Please run with "-d" and without "--no-bytecode" first, and make
+  sure that debug log does not contain "was included as bytecode".
