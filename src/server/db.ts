@@ -35,7 +35,6 @@ db.exec(`
     processed_at DATETIME
   );
 
-  CREATE INDEX IF NOT EXISTS idx_queue_process ON queue(status, scheduled_at);
   
   CREATE TABLE IF NOT EXISTS settings (
     key TEXT,
@@ -156,6 +155,7 @@ if (contactsPkCount < 2) {
 // Migration for scheduled_at
 try {
   db.exec("ALTER TABLE queue ADD COLUMN scheduled_at DATETIME DEFAULT CURRENT_TIMESTAMP");
+  db.exec("CREATE INDEX IF NOT EXISTS idx_queue_process ON queue(status, scheduled_at)");
 } catch (error) {
   // Column likely already exists
 }
