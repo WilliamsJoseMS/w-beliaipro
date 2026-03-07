@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Send as SendIcon, ImageIcon, FileText, CheckCircle2, AlertCircle, Calendar, Clock, Search, X, UserCheck, Shield, Video, RefreshCw, Eye, Music, File, UserPlus } from 'lucide-react';
 import { WhatsAppPreview } from '../components/WhatsAppPreview';
 import { TimePicker } from '../components/TimePicker';
+import { apiUrl } from '../config/api';
 
 export default function Send() {
   const [jids, setJids] = useState('');
@@ -45,7 +46,7 @@ export default function Send() {
     if (refreshing) return;
     setRefreshing(true);
     try {
-      const res = await fetch('http://localhost:3000/api/contacts');
+      const res = await fetch(apiUrl('/api/contacts'));
       const data = await res.json();
       setContacts(data);
     } catch (error) {

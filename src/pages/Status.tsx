@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { apiUrl } from '../config/api';
 import {
   Plus,
   Trash2,
@@ -63,7 +64,7 @@ export default function Status() {
 
   const fetchStatuses = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/statuses');
+      const res = await fetch(apiUrl('/api/statuses'));
       const data = await res.json();
       setStatuses(data);
     } catch (err) {
@@ -75,7 +76,7 @@ export default function Status() {
 
   const fetchGroups = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/groups');
+      const res = await fetch(apiUrl('/api/groups'));
       const data = await res.json();
       setGroups(data);
     } catch (err) {

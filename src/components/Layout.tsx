@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Send, Users, Settings, LogOut, ShieldCheck, Bell, Megaphone, Share2, List, Smartphone, Wifi, Loader2 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import QRCode from 'qrcode';
+import { API_BASE, WS_URL, apiUrl } from '../config/api';
 
-const socket = io('http://localhost:3000');
+const socket = io(WS_URL);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -41,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setQrUrl(null);
     });
 
-    fetch('http://localhost:3000/api/status')
+    fetch(apiUrl('/api/status'))
       .then(res => res.json())
       .then(data => {
         setStatus({ ...data, loading: false });
@@ -59,14 +60,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleConnect = () => {
     setStatus(prev => ({ ...prev, loading: true }));
-    fetch('http://localhost:3000/api/connect', { method: 'POST' })
+    fetch(apiUrl('/api/connect'), { method: 'POST' })
       .catch(() => setStatus(prev => ({ ...prev, loading: false })));
   };
 
   const handleWhatsAppLogout = () => {
     if (!confirm('¿Estás seguro de que deseas cerrar la sesión de WhatsApp?')) return;
     setStatus((prev: any) => ({ ...prev, loading: true }));
-    fetch('http://localhost:3000/api/disconnect', { method: 'POST' })
+    fetch(apiUrl('/api/disconnect'), { method: 'POST' })
       .catch(() => setStatus((prev: any) => ({ ...prev, loading: false })));
   };
 
@@ -219,7 +220,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <button
                   onClick={() => {
                     setStatus(prev => ({ ...prev, loading: true }));
-                    fetch('http://localhost:3000/api/reset', { method: 'POST' }).finally(() => setStatus(prev => ({ ...prev, loading: false })));
+                    fetch(apiUrl('/api/reset'), { method: 'POST' }).finally(() => setStatus(prev => ({ ...prev, loading: false })));
                   }}
                   className="w-full py-3.5 bg-slate-800/80 text-slate-300 font-bold rounded-xl hover:bg-slate-700 transition relative z-10 border border-slate-700"
                 >

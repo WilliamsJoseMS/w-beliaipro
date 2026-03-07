@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import QRCode from 'qrcode';
 import { CheckCircle, AlertCircle, Loader2, Activity, Smartphone, Wifi, Clock, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { WS_URL, apiUrl } from '../config/api';
 
-const socket = io('http://localhost:3000');
+const socket = io(WS_URL);
 
 export default function Dashboard() {
   const [queueStats, setQueueStats] = useState<any>({ pending: 0, completed: 0, failed: 0 });
@@ -14,7 +15,7 @@ export default function Dashboard() {
     // Sincronizar la zona horaria real del dispositivo con el servidor
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      fetch('http://localhost:3000/api/settings', {
+      fetch(apiUrl('/api/settings'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ timezone: tz })
@@ -25,7 +26,7 @@ export default function Dashboard() {
 
     const fetchTime = () => {
       if (document.visibilityState === 'visible' && !isRateLimited) {
-        fetch('http://localhost:3000/api/time')
+        fetch(apiUrl('/api/time'))
           .then(res => {
             if (res.status === 429) {
               isRateLimited = true;
@@ -41,7 +42,7 @@ export default function Dashboard() {
 
     const fetchLogs = () => {
       if (document.visibilityState === 'visible' && !isRateLimited) {
-        fetch('http://localhost:3000/api/queue/logs')
+        fetch(apiUrl('/api/queue/logs'))
           .then(res => {
             if (res.status === 429) {
               isRateLimited = true;
@@ -66,7 +67,7 @@ export default function Dashboard() {
       setQueueStats(stats);
     });
 
-    fetch('http://localhost:3000/api/queue/stats').then(res => res.json()).then(setQueueStats);
+    fetch(apiUrl('/api/queue/stats')).then(res => res.json()).then(setQueueStats);
 
     // Auto reload dashboard every 5 minutes (300000 ms)
     const reloadInterval = setInterval(() => {

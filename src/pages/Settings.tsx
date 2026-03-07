@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Save, Shield, Clock, AlertTriangle, Info, MessageSquare, RotateCcw } from 'lucide-react';
 import { TimePicker } from '../components/TimePicker';
+import { apiUrl } from '../config/api';
 
 const initialSettings = {
   minDelay: 50,
@@ -19,7 +20,7 @@ export default function Settings() {
   const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/settings')
+    fetch(apiUrl('/api/settings'))
       .then(res => res.json())
       .then(data => {
         if (Object.keys(data).length > 0) {
@@ -50,7 +51,7 @@ export default function Settings() {
     setStatus(null);
 
     try {
-      const res = await fetch('http://localhost:3000/api/settings', {
+      const res = await fetch(apiUrl('/api/settings'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings)

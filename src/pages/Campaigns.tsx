@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { apiUrl } from '../config/api';
 import {
   Megaphone, Plus, Search, Calendar, Clock,
   Play, Pause, Edit2, Trash2, Users,
@@ -145,7 +146,7 @@ export default function Campaigns() {
 
   const fetchCampaigns = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/campaigns');
+      const res = await fetch(apiUrl('/api/campaigns'));
       if (res.status === 429) {
         setStatus({ type: 'error', message: 'Límite de peticiones excedido. Esperando...' });
         return;
@@ -161,7 +162,7 @@ export default function Campaigns() {
 
   const fetchGroups = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/groups');
+      const res = await fetch(apiUrl('/api/groups'));
       if (!res.ok) {
         console.warn('Failed to fetch groups:', res.status);
         return;

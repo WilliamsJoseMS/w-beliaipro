@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Clock, Megaphone, Send, Image, Users, Hash, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import { io } from 'socket.io-client';
+import { WS_URL, apiUrl } from '../config/api';
 
-const socket = io('http://localhost:3000');
+const socket = io(WS_URL);
 
 interface QueueLog {
   id: string;
@@ -61,7 +62,7 @@ export default function QueueActivity() {
 
     setIsClearing(true);
     try {
-      const res = await fetch('http://localhost:3000/api/queue/clear', { method: 'DELETE' });
+      const res = await fetch(apiUrl('/api/queue/clear'), { method: 'DELETE' });
       if (res.ok) {
         setQueueLogs([]);
       } else {
@@ -80,7 +81,7 @@ export default function QueueActivity() {
 
     const fetchLogs = () => {
       if (document.visibilityState === 'visible' && !isRateLimited) {
-        fetch('http://localhost:3000/api/queue/logs')
+        fetch(apiUrl('/api/queue/logs'))
           .then(res => {
             if (res.status === 429) {
               isRateLimited = true;
